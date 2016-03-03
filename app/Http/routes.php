@@ -23,38 +23,83 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-  //We need sessions and CSRF for pretty much everything.
-  Route::get("/", function () {
-      return view("base");
-  });
-  
-  //A page letting the user log in
-  Route::get("login", "Auth\AuthController@getLogin");
 
-  //Post data to attempt log in. Returns to homepage
-  Route::post("login", "Auth\AuthController@postLogin");
-  
-  //Post data to log out
-  Route::post('logout', [
-    "as" => "logout",
-    "uses" => "Auth\AuthController@logout"
-  ]);
-  
-  //A page to allow a user to register
-  Route::get("register", "Auth\AuthController@getRegister");
-  
-  //Create the new user
-  Route::post("register", "Auth\AuthController@postRegister");
+    Route::get("/", [
+        "as" => "homepage",
+        function () {
+            $posts = \App\Post::orderBy("Created_at", "asc")->get();
+            return view("homepage", [
+                "posts" => $posts,
+            ]);
+        },
+    ]);
 
-  //Screen to allow user to ask to reset the password
-  Route::get("resetpassword", "Auth\PasswordController@sendResetLinkEmail");
+    
+    Route::get("signin", [
+        "as" => "signin",
+        "uses" => "Auth\AuthController@getLogin",
+    ]);
+    Route::post("signin", [
+        "as" => "signin",
+        "uses" => "Auth\AuthController@postLogin",
+    ]);
 
-  //Screen to let you reset password (from a link in an email)
-  Route::get("resetpassword/{token}", "Auth\PasswordController@showResetForm");
+    //Sign out should not be a get due to cross-site attacks
+    Route::post("signout", [
+        "as" => "signout",
+        "uses" => "Auth\AuthController@logout",
+    ]);
+  
+    Route::get("register", [
+        "as" => "register",
+        "uses" => "Auth\AuthController@getRegister"
+    ]);
+    Route::post("register", [
+        "as" => "register",
+        "uses" => "Auth\AuthController@postRegister"
+    ]);
 
-  //Actually do the reset
-  Route::post("resetpassword", "Auth\PasswordController@reset");
+
+
+    //We do not currently have emails working.
+    //Route::get("resetpassword", "Auth\PasswordController@sendResetLinkEmail");
+    //Route::get("resetpassword/{token}", "Auth\PasswordController@showResetForm");
+    //Route::post("resetpassword", "Auth\PasswordController@reset");
+
+    Route::get("newpost", [
+        "as" => "newpost",
+        function () {
+            return view("newpost");
+        },
+    ]);
+    Route::post("api/1.0/post", [
+        "as" => "createpost",
+        "uses" => "PostController@store",
+    ]);
+
+    Route::delete("api/1.0/{post}", [
+        "as" => "deletepost",
+        "uses" => "PostController@destroy",
+    ])->where("id", "[0-9]+");
+
+    Route::get("update/{post}", [
+        "as" => "updatepost",
+        function ($post) {
+            $post = \App\Post::findOrFail($post);
+            return view("updatepost", [
+                "post" => $post,
+            ]);
+        },
+    ])->where("id", "[0-9]+");
+    Route::post("update/{post}", [
+        "as" => "updatepost",
+        "uses" => "PostController@update",
+    ])->where("id", "[0-9]+");
+
+
 });
+
+
 
 
 //API
@@ -65,23 +110,22 @@ Route::get("api/1.0/list", function () {
 
 Route::get("api/1.0/{id}", function () {
     //Return JSON about the post
-});
+})->where("id", "[0-9]+");
+
 
 Route::post("api/1.0/{id}", function () {
     //Edit the post with id. Post the values.
-});
-
-Route::delete("api/1.0/{id}", function () {
-    //Delete a post with id.
-});
+})->where("id", "[0-9]+");
 
 
+Route::get("{post}", [
+    "as" => "viewpost",
+    function ($post) {
+        $post = \App\Post::findOrFail($post);
+        return view("viewpost", [
+            "post" => $post,
+        ]);
+    },
+])->where("id", "[0-9]+");
 
-Route::get("{id}", function ($id) {
-    //Show details about that post
-});
-
-Route::get("edit/{id}", function () {
-    //Show a page to let them edit the post (if they own it)
-});
 

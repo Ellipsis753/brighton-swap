@@ -1,25 +1,83 @@
 .base-background {
-  background-color: #101;
+    background-color: #101;
 }
 
 .base-content {
-  display: block;
-  margin: auto;
-  width: 90%;
-  max-width: 1100px;
-  background-color: #999;
-  border-radius: 5px;
-  padding: 8px 12px;
+    display: block;
+    margin: auto;
+    width: 90%;
+    max-width: 1100px;
+    background-color: #DDD;
+    border-radius: 5px;
+    padding: 30px 30px;
+    min-height: 60vh;
+    color: #black;
+    font-size: 1.1em;
 }
 
 .fancy-title {
-  /* Try to add a 80s-style drop shadow. Obviously an SVG or an image would be better than this. */
-  color: yellow;
-  text-transform: uppercase;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 red, 2px 2px 0 red, 3px 3px 0 red, 4px 4px 0 red;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 15px;
+    /* Try to add a 80s-style drop shadow. Obviously an SVG or an image would be better than this. */
+    color: yellow;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 4em;
+    text-shadow: 1px 1px 0 red, 2px 2px 0 red, 3px 3px 0 red, 4px 4px 0 red;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
+.base-menu {
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin: 10px auto;
+}
+
+.base-menu__item {
+    display: inline;
+    list-style-type: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #AAA;
+    font-size: 1.4em;
+}
+
+.base-menu__item--clickable {
+    color: #EEE;
+    border-radius: 5px;
+    text-shadow: 0 0 0 transparent;
+    transition: background-color 0.3s,
+                text-shadow 0.3s,
+                color 0.1s;
+}
+
+.base-menu__item--clickable:hover,
+.base-menu__item--clickable:active {
+    background-color: #333;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.unstyled-link,
+.unstyled-link:hover,
+.unstyled-link:active {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.signout-form {
+    display: inline;
+}
+
+.signout-form__button {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
