@@ -23,7 +23,6 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-
     Route::get("/", [
         "as" => "homepage",
         function () {
@@ -34,11 +33,11 @@ Route::group(['middleware' => ['web']], function () {
         },
     ]);
 
-    
     Route::get("signin", [
         "as" => "signin",
         "uses" => "Auth\AuthController@getLogin",
     ]);
+
     Route::post("signin", [
         "as" => "signin",
         "uses" => "Auth\AuthController@postLogin",
@@ -54,12 +53,11 @@ Route::group(['middleware' => ['web']], function () {
         "as" => "register",
         "uses" => "Auth\AuthController@getRegister"
     ]);
+
     Route::post("register", [
         "as" => "register",
         "uses" => "Auth\AuthController@postRegister"
     ]);
-
-
 
     //We do not currently have emails working.
     //Route::get("resetpassword", "Auth\PasswordController@sendResetLinkEmail");
@@ -68,13 +66,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get("newpost", [
         "as" => "newpost",
-        function () {
-            return view("newpost");
-        },
-    ]);
-    Route::post("api/1.0/post", [
-        "as" => "createpost",
-        "uses" => "PostController@store",
+        "uses" => "PostController@newPost",
     ]);
 
     Route::delete("api/1.0/{post}", [
@@ -84,19 +76,18 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get("update/{post}", [
         "as" => "updatepost",
-        function ($post) {
-            $post = \App\Post::findOrFail($post);
-            return view("updatepost", [
-                "post" => $post,
-            ]);
-        },
+        "uses" => "PostController@updatepost",
     ])->where("id", "[0-9]+");
+
     Route::post("update/{post}", [
         "as" => "updatepost",
         "uses" => "PostController@update",
     ])->where("id", "[0-9]+");
 
-
+    Route::get("{post}", [
+        "as" => "viewpost",
+        "uses" => "PostController@viewPost",
+    ])->where("id", "[0-9]+");
 });
 
 
@@ -104,28 +95,37 @@ Route::group(['middleware' => ['web']], function () {
 
 //API
 
-Route::get("api/1.0/list", function () {
+Route::post("api/1.0/post", [
+    "as" => "createpost",
+    "uses" => "PostController@store",
+]);
+
+Route::get("api/1.0/posts", function () {
     //Return a JSON list of current posts
 });
+Route::get("api/1.0/posts", function () {
+    //Create a new post
+});
 
-Route::get("api/1.0/{id}", function () {
+Route::get("api/1.0/posts/{post}", function () {
     //Return JSON about the post
 })->where("id", "[0-9]+");
 
-
-Route::post("api/1.0/{id}", function () {
+Route::post("api/1.0/posts/{post}", function () {
     //Edit the post with id. Post the values.
 })->where("id", "[0-9]+");
 
-
-Route::get("{post}", [
-    "as" => "viewpost",
-    function ($post) {
-        $post = \App\Post::findOrFail($post);
-        return view("viewpost", [
-            "post" => $post,
-        ]);
-    },
+Route::delete("api/1.0/posts/{post}", function () {
+    //Delete
+})->where("id", "[0-9]+");
+/*
+Route::put("api/1.0/posts/{post}", [
+    "as" => "updatepost",
+    "uses" => "PostController@update",
 ])->where("id", "[0-9]+");
+*/
+
+
+
 
 

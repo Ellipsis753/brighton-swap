@@ -11,7 +11,7 @@
     border-radius: 5px;
     padding: 30px 30px;
     min-height: 60vh;
-    color: #black;
+    color: black;
     font-size: 1.1em;
 }
 
@@ -24,7 +24,18 @@
     text-shadow: 1px 1px 0 red, 2px 2px 0 red, 3px 3px 0 red, 4px 4px 0 red;
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+}
+
+.fancy-subtitle {
+    color: #FDE;
+    text-shadow: 0 0 3px #FDE;
+    text-align: center;
+    font-size: 1.3em;
+    font-family: monospace;
+    letter-spacing: 3px;
+    margin-top: 5px;
+    marign-bottom: 5px;
 }
 
 .base-menu {
@@ -69,6 +80,19 @@
     color: inherit;
 }
 
+.unstyled-inline-form {
+    display: inline;
+}
+
+.unstyled-inline-form__button {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
 .signout-form {
     display: inline;
 }
@@ -80,4 +104,57 @@
     border: none;
     outline: none;
     background-color: transparent;
+}
+
+.post-table {
+    background-color: white;
+    width: 90%;
+    max-width: 50vw;
+    margin: 20px auto;
+}
+
+.post-table__cell {
+    padding: 10px;
+    border: 1px solid #EEE;
+    height: 20px;
+}
+
+.post-table__cell--controls {
+    line-height: 40px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    margin: 5px 0;
+}
+
+.post-table__cell--controls__icon {
+    line-height: 40px;
+    color: black;
+    transition: color 0.1s;
+    padding: 5px;
+}
+
+.post-table__cell--controls__icon:hover {
+    color: #F55;
+    padding: 5px;
+}
+
+.register-form-input,
+.sign-in-form-input {
+    margin-bottom: 25px;
+}
+
+.alert-danger--reduced-margin {
+    margin-bottom: 5px;
+}
+
+/* Additional specificity is needed here to overwrite bootstrap default. */
+.login-remember-me-checkbox,
+input.login-remember-me-checkbox {
+    display: block;
+    margin: 10px;
+    margin-left: 0;
+}
+
+.sign-in-button {
+    margin-top: 10px;
 }

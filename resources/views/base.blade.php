@@ -19,6 +19,7 @@
     </head>
     <body class="base-background">
         <h1 class="fancy-title"><a href="{{ route('homepage') }}" class="unstyled-link">Brighton Swap Shop</a></h1>
+        <h2 class="fancy-subtitle">Attempting to help people trade since 2016</h2>
         @include('base-menu')
         <div class="base-content">
             @yield("content")

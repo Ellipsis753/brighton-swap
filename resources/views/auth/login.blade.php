@@ -1,32 +1,43 @@
 @extends("base")
 
 @section("content")
+    @unless (Auth::guest())
+        <p>
+            You are already signed in. You must sign out before you can log in again.
+        </p>
+        <a href="{{ URL::previous() }}">
+            <button type="button" class="btn btn-default">Back</button>
+        </a>
+    @else
+        <form method="POST">
+            {!! csrf_field() !!}
 
-<!-- TODO: Add a message to users that are already logged in -->
-
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('signin') }}">
-        {!! csrf_field() !!}
-        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            Email:
-            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
             @if ($errors->has('email'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('email') }}
+                </div>
             @endif
-        </div>
-        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-            password:
-            <input type="password" class="form-control" name="password">
+            <label for="email">Email:</label>
+            <input class="form-control sign-in-form-input" type="email" name="email" value="{{ old('email') }}">
+
             @if ($errors->has('password'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('password') }}
+                </div>
             @endif
-        </div>
-        <input type="checkbox" name="remember">
-        <button type="submit" class="btn btn-primary">Login</button>
-    
-        <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+            <label for="password">Password:</label>
+            <input class="form-control sign-in-form-input" type="password" name="password">
+
+            <label for="checkbox">Remember me:</label>
+            @if (old('remember'))
+                <input class="login-remember-me-checkbox" type="checkbox" name="remember" checked>
+            @else
+                <input class="login-remember-me-checkbox" type="checkbox" name="remember">
+            @endif
+
+            <button type="submit" class="btn btn-default sign-in-button">
+                Sign In
+            </button>
     </form>
+    @endunless
 @endsection

@@ -1,14 +1,21 @@
 @extends("base")
 
 @section("content")
+    <h1>Details of Trade</h1>
 
-    have:
-    {{ $post->have }}<br />
+    <em>{{ ucfirst($post->user->name) }}</em> is looking to trade:
+    <div class="well">
+        {{ $post->have }}
+    </div>
 
-    want:
-    {{ $post->want }}<br />
+    <em>{{ ucfirst($post->user->name) }}</em> would like to get:
+    <div class="well">
+        {{ $post->want }}
+    </div>
 
-    Details:
-    {{ $post->details }}<br />
+    Further details:
+    <div class="well">
+        {{ $post->details }}
+    </div>
 
 @endsection

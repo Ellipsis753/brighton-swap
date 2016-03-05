@@ -1,43 +1,52 @@
 @extends("base")
 
 @section("content")
+    @unless (Auth::guest())
+        <p>
+            You are already signed in. You must sign out before you can create a new account.
+        </p>
+        <a href="{{ URL::previous() }}">
+            <button type="button" class="btn btn-default">Back</button>
+        </a>
+    @else
+        <form method="POST">
+            {!! csrf_field() !!}
 
-<form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-    {!! csrf_field() !!}
-    name:
-    <input type="text" class="form-control" name="name" value="{{ old('name') }}">
-    @if ($errors->has('name'))
-        <span class="help-block">
-            <strong>{{ $errors->first('name') }}</strong>
-        </span>
-    @endif
+            @if ($errors->has('name'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('name') }}
+                </div>
+            @endif
+            <label for="name">Name:</label>
+            <input class="form-control register-form-input" type="text" name="name" value="{{ old('name') }}">
 
-    email:
-    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-    @if ($errors->has('email'))
-        <span class="help-block">
-            <strong>{{ $errors->first('email') }}</strong>
-        </span>
-    @endif
+            @if ($errors->has('email'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
+            <label for="email">Email:</label>
+            <input class="form-control register-form-input" type="email" name="email" value="{{ old('email') }}">
 
-    password:
-   <input type="password" class="form-control" name="password">
-    @if ($errors->has('password'))
-        <span class="help-block">
-            <strong>{{ $errors->first('password') }}</strong>
-        </span>
-    @endif
+            @if ($errors->has('password'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('password') }}
+                </div>
+            @endif
+            <label for="password">Password:</label>
+            <input class="form-control register-form-input" type="password" name="password">
 
-    confirm password:
-    <input type="password" class="form-control" name="password_confirmation">
-    @if ($errors->has('password_confirmation'))
-        <span class="help-block">
-            <strong>{{ $errors->first('password_confirmation') }}</strong>
-        </span>
-    @endif
-  
-    <button type="submit" class="btn btn-primary">
-        Register
-    </button>
-</form>
+            @if ($errors->has('password_confirmation'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('password_confirmation') }}
+                </div>
+            @endif
+            <label for="password_confirmation">Confirm password:</label>
+            <input class="form-control register-form-input" type="password" class="form-control" name="password_confirmation">
+
+            <button type="submit" class="btn btn-default register-button">
+                Register
+            </button>
+        </form>
+    @endunless
 @endsection

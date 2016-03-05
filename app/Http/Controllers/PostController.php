@@ -8,6 +8,26 @@ use App\Http\Requests;
 
 class PostController extends Controller
 {
+    public function newPost() {
+        //A user must be logged in to create a new post
+        return view("newpost");
+    }
+
+    public function updatePost($post) {
+        $post = \App\Post::findOrFail($post);
+        return view("updatepost", [
+            "post" => $post,
+        ]);
+    }
+
+    public function viewpost($post) {
+        $post = \App\Post::findOrFail($post);
+        return view("viewpost", [
+            "post" => $post,
+        ]);
+    }
+
+
     public function store(Request $request) {
         //If validation fails they will be redirected back where they came. Errors will be flashed.
         $this->validate($request, [
@@ -26,7 +46,7 @@ class PostController extends Controller
     }
 
     public function update(Request $request, \App\Post $post) {
-        $this->authorize("edit", $post);
+        $this->authorize("update", $post);
 
         $this->validate($request, [
             "want" => "required|max:255",
@@ -48,4 +68,5 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route("homepage");
     }
+
 }

@@ -29,7 +29,7 @@ class PostPolicy
         return $allowed;
     }
 
-    public function edit(\App\User $user, \App\Post $post) {
+    public function update(\App\User $user, \App\Post $post) {
         $allowed = false;
         //With a mysql database Laravel returns user_id as a string.
         //This seems to be a known Laravel thing.
