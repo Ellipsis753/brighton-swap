@@ -26,6 +26,10 @@ class PostPolicy
         if ((string)$user->id === (string)$post->user_id) {
             $allowed = true;
         }
+        if ($user->role == 1) {
+            //Allow admin to do anything
+            $allowed = true;
+        }
         return $allowed;
     }
 
@@ -35,6 +39,10 @@ class PostPolicy
         //This seems to be a known Laravel thing.
         //When I properly understand what happens, "Attribute Casting" might solve it.
         if ((string)$user->id === (string)$post->user_id) {
+            $allowed = true;
+        }
+        if ($user->role == 1) {
+            //Allow admin to do anything
             $allowed = true;
         }
         return $allowed;
