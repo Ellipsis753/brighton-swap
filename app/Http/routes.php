@@ -69,6 +69,12 @@ Route::group(['middleware' => ['web']], function () {
         "uses" => "PostController@newPost",
     ]);
 
+    Route::post("newpost", [
+        "as" => "createpost",
+        "uses" => "PostController@store",
+    ]);
+
+
     Route::delete("api/1.0/{post}", [
         "as" => "deletepost",
         "uses" => "PostController@destroy",
@@ -95,10 +101,6 @@ Route::group(['middleware' => ['web']], function () {
 
 //API
 
-Route::post("api/1.0/post", [
-    "as" => "createpost",
-    "uses" => "PostController@store",
-]);
 
 Route::get("api/1.0/posts", function () {
     //Return a JSON list of current posts

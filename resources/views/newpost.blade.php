@@ -9,35 +9,34 @@
             <button type="button" class="btn btn-default">Back</button>
         </a>
     @else
-        @if (count($errors) > 0)
-            <!-- Form Error List -->
-            <div class="alert alert-danger">
-                <strong>Whoops! Something went wrong!</strong>
-        
-                <br><br>
-        
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    
-    
-        <form action="{{ route('createpost') }}" method="POST">
+        <form method="POST">
             {{ csrf_field() }}
-    
-            What item are you hoping to trade?
-            <input type="text" name="have"><br />
-    
-            What are you looking for in exchange?
-            <input type="text" name="want"><br />
-    
-            Details (please include contact details):
-            <input type="text" name="details"><br />
-    
-            <button type="submit">Offer Trade</button>
+
+            @if ($errors->has('have'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('have') }}
+                </div>
+            @endif
+            <label for="have">What item are you hoping to trade?</label>
+            <input class="form-control basic-form-input" type="text" name="have">
+
+            @if ($errors->has('want'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('want') }}
+                </div>
+            @endif
+            <label for="want">What are you looking for in exchange?</label>
+            <input class="form-control basic-form-input" type="text" name="want">
+
+            @if ($errors->has('details'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('details') }}
+                </div>
+            @endif
+            <label for="details">Details (Don't forget to include contact details):</label>
+            <input class="form-control basic-form-input" type="text" name="details">
+
+            <button type="submit" class="btn btn-default">Create</button>
         </form>
     @endif
 @endsection

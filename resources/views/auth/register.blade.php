@@ -18,7 +18,7 @@
                 </div>
             @endif
             <label for="name">Name:</label>
-            <input class="form-control register-form-input" type="text" name="name" value="{{ old('name') }}">
+            <input class="form-control basic-form-input" type="text" name="name" value="{{ old('name') }}">
 
             @if ($errors->has('email'))
                 <div class="alert alert-danger alert-danger--reduced-margin">
@@ -26,7 +26,7 @@
                 </div>
             @endif
             <label for="email">Email:</label>
-            <input class="form-control register-form-input" type="email" name="email" value="{{ old('email') }}">
+            <input class="form-control basic-form-input" type="email" name="email" value="{{ old('email') }}">
 
             @if ($errors->has('password'))
                 <div class="alert alert-danger alert-danger--reduced-margin">
@@ -34,7 +34,7 @@
                 </div>
             @endif
             <label for="password">Password:</label>
-            <input class="form-control register-form-input" type="password" name="password">
+            <input class="form-control basic-form-input" type="password" name="password">
 
             @if ($errors->has('password_confirmation'))
                 <div class="alert alert-danger alert-danger--reduced-margin">
@@ -42,7 +42,7 @@
                 </div>
             @endif
             <label for="password_confirmation">Confirm password:</label>
-            <input class="form-control register-form-input" type="password" class="form-control" name="password_confirmation">
+            <input class="form-control basic-form-input" type="password" class="form-control" name="password_confirmation">
 
             <button type="submit" class="btn btn-default register-button">
                 Register

@@ -18,7 +18,7 @@
                 </div>
             @endif
             <label for="email">Email:</label>
-            <input class="form-control sign-in-form-input" type="email" name="email" value="{{ old('email') }}">
+            <input class="form-control basic-form-input" type="email" name="email" value="{{ old('email') }}">
 
             @if ($errors->has('password'))
                 <div class="alert alert-danger alert-danger--reduced-margin">
@@ -26,7 +26,7 @@
                 </div>
             @endif
             <label for="password">Password:</label>
-            <input class="form-control sign-in-form-input" type="password" name="password">
+            <input class="form-control basic-form-input" type="password" name="password">
 
             <label for="checkbox">Remember me:</label>
             @if (old('remember'))

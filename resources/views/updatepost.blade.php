@@ -12,16 +12,31 @@
         <form method="POST">
             {{ csrf_field() }}
 
-            What item are you hoping to trade?
-            <input type="text" name="have" value="{{ $post->have }}"><br />
+            @if ($errors->has('have'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('have') }}
+                </div>
+            @endif
+            <label for="have">What item are you hoping to trade?</label>
+            <input class="form-control basic-form-input" type="text" name="have" value="{{ $post->have }}">
 
-            What are you looking for in exchange?
-            <input type="text" name="want" value="{{ $post->want }}"><br />
+            @if ($errors->has('want'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('want') }}
+                </div>
+            @endif
+            <label for="want">What are you looking for in exchange?</label>
+            <input class="form-control basic-form-input" type="text" name="want" value="{{ $post->want }}">
 
-            Details:
-            <input type="text" name="details" value="{{ $post->details }}"><br />
+            @if ($errors->has('details'))
+                <div class="alert alert-danger alert-danger--reduced-margin">
+                    {{ $errors->first('details') }}
+                </div>
+            @endif
+            <label for="details">Details (Don't forget to include contact details):</label>
+            <input class="form-control basic-form-input" type="text" name="details" value="{{ $post->details }}">
 
-            <button type="submit">save</button>
+            <button type="submit" class="btn btn-default">Save</button>
         </form>
     @endcannot
 @endsection
