@@ -43,7 +43,7 @@ Route::group(['middleware' => ['web']], function () {
         "uses" => "Auth\AuthController@postLogin",
     ]);
 
-    //Sign out should not be a get due to cross-site attacks
+    //Sign out is better as a POST due to cross-site attacks
     Route::post("signout", [
         "as" => "signout",
         "uses" => "Auth\AuthController@logout",
@@ -59,11 +59,6 @@ Route::group(['middleware' => ['web']], function () {
         "uses" => "Auth\AuthController@postRegister"
     ]);
 
-    //We do not currently have emails working.
-    //Route::get("resetpassword", "Auth\PasswordController@sendResetLinkEmail");
-    //Route::get("resetpassword/{token}", "Auth\PasswordController@showResetForm");
-    //Route::post("resetpassword", "Auth\PasswordController@reset");
-
     Route::get("newpost", [
         "as" => "newpost",
         "uses" => "PostController@newPost",
@@ -74,18 +69,12 @@ Route::group(['middleware' => ['web']], function () {
         "uses" => "PostController@store",
     ]);
 
-
-    Route::delete("api/1.0/{post}", [
-        "as" => "deletepost",
-        "uses" => "PostController@destroy",
-    ])->where("id", "[0-9]+");
-
     Route::get("update/{post}", [
         "as" => "updatepost",
         "uses" => "PostController@updatepost",
     ])->where("id", "[0-9]+");
 
-    Route::post("update/{post}", [
+    Route::put("update/{post}", [
         "as" => "updatepost",
         "uses" => "PostController@update",
     ])->where("id", "[0-9]+");
@@ -94,40 +83,30 @@ Route::group(['middleware' => ['web']], function () {
         "as" => "viewpost",
         "uses" => "PostController@viewPost",
     ])->where("id", "[0-9]+");
+
+    Route::delete("{post}", [
+        "as" => "deletepost",
+        "uses" => "PostController@destroy",
+    ])->where("id", "[0-9]+");
 });
 
 
+//API - Does not use cookies. Uses basic auth.
+Route::group(['middleware' => ['auth.basic']], function () {
+    //Return a JSON list of current posts.
+    //Does not strictly need authentication but is required as per-user rate limiting way be added later.
+    Route::get("api/1.0/posts", "PostController@api1List");
 
+    Route::post("api/1.0/posts", "PostController@api1CreatePost");
 
-//API
+    Route::get("api/1.0/posts/{post}", "PostController@api1PostDetails")->
+        where("id", "[0-9]+");
 
+    Route::put("api/1.0/posts/{post}", "PostController@api1Update")->
+        where("id", "[0-9]+");
 
-Route::get("api/1.0/posts", function () {
-    //Return a JSON list of current posts
+    Route::delete("api/1.0/posts/{post}", "PostController@api1Delete")->
+        where("id", "[0-9]+");
+
+    //It's not currently possible to get user details with the API.
 });
-Route::get("api/1.0/posts", function () {
-    //Create a new post
-});
-
-Route::get("api/1.0/posts/{post}", function () {
-    //Return JSON about the post
-})->where("id", "[0-9]+");
-
-Route::post("api/1.0/posts/{post}", function () {
-    //Edit the post with id. Post the values.
-})->where("id", "[0-9]+");
-
-Route::delete("api/1.0/posts/{post}", function () {
-    //Delete
-})->where("id", "[0-9]+");
-/*
-Route::put("api/1.0/posts/{post}", [
-    "as" => "updatepost",
-    "uses" => "PostController@update",
-])->where("id", "[0-9]+");
-*/
-
-
-
-
-

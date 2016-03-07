@@ -11,6 +11,7 @@
     @else
         <form method="POST">
             {{ csrf_field() }}
+            {{ method_field('PUT') }}
 
             @if ($errors->has('have'))
                 <div class="alert alert-danger alert-danger--reduced-margin">
